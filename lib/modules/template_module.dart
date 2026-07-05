@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../core/ad_manager.dart';
+import 'photo_view_screen.dart';
 
 class TemplateModuleApp extends StatefulWidget {
   const TemplateModuleApp({super.key});
@@ -57,20 +58,34 @@ class _TemplateModuleAppState extends State<TemplateModuleApp> {
               index: index,
               adInterval: 6, 
               adHeight: 250,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1C1C1E),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white12),
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.photo_library, color: Colors.white54, size: 40),
-                      const SizedBox(height: 8),
-                      Text("Album ${index + 1}", style: const TextStyle(color: Colors.white54)),
-                    ],
+              child: InkWell(
+                onTap: () {
+                  // Standard transition. The MasterRouteObserver handles ads automatically!
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PhotoViewScreen(photoIndex: index),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF1C1C1E),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.white12),
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Hero(
+                          tag: 'photo_$index',
+                          child: const Icon(Icons.photo_library, color: Colors.white54, size: 40),
+                        ),
+                        const SizedBox(height: 8),
+                        Text("Album ${index + 1}", style: const TextStyle(color: Colors.white54)),
+                      ],
+                    ),
                   ),
                 ),
               ),
